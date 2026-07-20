@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0-60 Times | Car Performance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>0-60 Times — Car Performance Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-black: #1a1a1a;
-            --color-white: #fafafa;
-            --color-gray-100: #f5f5f5;
-            --color-gray-200: #e0e0e0;
-            --color-gray-300: #d0d0d0;
-            --color-gray-400: #a0a0a0;
-            --color-gray-500: #808080;
-            --color-gray-600: #606060;
-            --color-gray-700: #404040;
-            --color-gray-800: #2a2a2a;
+            --type-meta: 11px;
+            --type-body: 15px;
+            --type-label: 18px;
+            --type-section: 56px;
+            --type-display: 140px;
+
+            --space-tight: 12px;
+            --space-loose: 100px;
+
+            --bg-warm: #f2f1eb;
+            --bg-cool: #000000;
+            --text-primary: #1a1a1a;
+            --text-soft: #666666;
+            --accent: #ff2d55;
         }
 
         * {
@@ -25,280 +29,445 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-white);
-            color: var(--color-black);
-            min-height: 100vh;
-            padding: 48px 32px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-warm);
+            color: var(--text-primary);
+            font-size: var(--type-body);
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1024px;
-            margin: 0 auto;
+        main {
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
-        header {
-            text-align: left;
-            margin-bottom: 64px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid var(--color-gray-300);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: var(--color-gray-600);
-            margin-bottom: 0;
-            line-height: 1.6;
-        }
-
-        .controls {
+        /* === COLD OPEN === */
+        .cold-open {
+            height: 50vh;
             display: flex;
-            gap: 24px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
             align-items: flex-end;
+            padding: 0 40px 60px 40px;
+            background-color: var(--bg-warm);
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .control-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--color-black);
+        .hero-marquee {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(80px, 18vw, 220px);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            margin-bottom: 20px;
         }
 
-        .search-box {
-            padding: 12px 16px;
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-300);
-            font-size: 1rem;
-            color: var(--color-black);
-            min-width: 240px;
-            transition: all 0.2s;
+        .hero-subtitle {
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400;
         }
 
-        .search-box::placeholder {
-            color: var(--color-gray-500);
-        }
-
-        .search-box:focus {
-            outline: none;
-            border: 2px solid var(--color-black);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .sort-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .sort-btn {
-            padding: 12px 24px;
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-300);
-            color: var(--color-black);
-            cursor: pointer;
-            font-size: 0.9rem;
+        .hero-clock {
+            display: inline-block;
+            margin-left: 20px;
             font-weight: 500;
-            transition: all 0.2s;
-            white-space: nowrap;
         }
 
-        .sort-btn:hover {
-            border-color: var(--color-black);
-            background-color: var(--color-gray-100);
-        }
-
-        .sort-btn:focus {
-            outline: none;
-            border: 2px solid var(--color-black);
-            padding: 11px 23px;
-        }
-
-        .sort-btn.active {
-            background-color: var(--color-black);
-            border-color: var(--color-black);
-            color: var(--color-white);
-        }
-
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 64px;
-        }
-
-        .car-card {
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-300);
-            padding: 32px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .car-card:hover {
-            border-color: var(--color-black);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        .car-header {
-            margin-bottom: 24px;
-        }
-
-        .car-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--color-black);
-            margin-bottom: 4px;
-            line-height: 1.3;
-        }
-
-        .car-category {
-            font-size: 0.75rem;
-            color: var(--color-gray-600);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .car-stats {
+        /* === NAV / HEADER === */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: rgba(242, 241, 235, 0.98);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             display: flex;
-            gap: 24px;
-            padding-top: 24px;
-            border-top: 1px solid var(--color-gray-300);
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .stat {
+        .header-left {
+            font-size: var(--type-meta);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-soft);
+        }
+
+        .header-right {
+            font-size: var(--type-meta);
+            letter-spacing: 0.05em;
+            color: var(--text-soft);
+        }
+
+        /* === INDEXED LIST === */
+        .index-list {
+            padding: 80px 40px;
+            max-width: 900px;
+        }
+
+        .index-title {
+            font-family: 'Playfair Display', serif;
+            font-size: var(--type-section);
+            font-weight: 700;
+            margin-bottom: var(--space-loose);
+            line-height: 1.1;
+        }
+
+        .car-index {
+            list-style: none;
+        }
+
+        .car-item {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 40px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .car-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .car-number {
+            font-size: var(--type-label);
+            font-weight: 500;
+            color: var(--text-soft);
+            min-width: 40px;
+            flex-shrink: 0;
+        }
+
+        .car-content {
             flex: 1;
         }
 
-        .stat-value {
-            font-size: 2.25rem;
+        .car-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--color-black);
-            line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
 
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--color-gray-600);
-            text-transform: uppercase;
+        .car-meta {
+            font-size: var(--type-meta);
+            color: var(--text-soft);
             letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
         }
 
+        .car-specs {
+            display: flex;
+            gap: 48px;
+            margin-top: 16px;
+        }
+
+        .spec-item {
+            display: flex;
+            gap: 12px;
+        }
+
+        .spec-label {
+            color: var(--text-soft);
+            min-width: 60px;
+        }
+
+        .spec-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* === SEARCH / FILTER === */
+        .search-section {
+            padding: 80px 40px;
+            background-color: var(--bg-cool);
+            color: var(--bg-warm);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-label {
+            font-size: var(--type-meta);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+            color: rgba(242, 241, 235, 0.7);
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 16px 20px;
+            background: rgba(242, 241, 235, 0.05);
+            border: 1px solid rgba(242, 241, 235, 0.2);
+            color: var(--bg-warm);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: var(--type-body);
+            transition: all 0.3s;
+        }
+
+        .search-input::placeholder {
+            color: rgba(242, 241, 235, 0.4);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 45, 85, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.15);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 80px 40px;
+            background-color: var(--bg-warm);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 900px;
+        }
+
+        .footer-text {
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            letter-spacing: 0.05em;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-top: 60px;
+            font-size: var(--type-meta);
+        }
+
+        .footer-col h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: none;
+        }
+
+        .footer-col p {
+            color: var(--text-soft);
+            line-height: 1.8;
+        }
+
+        /* === STATS BLOCK === */
+        .stats-block {
+            background-color: var(--accent);
+            color: var(--bg-warm);
+            padding: 80px 40px;
+            margin: var(--space-loose) 40px;
+            display: inline-block;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box h4 {
+            font-size: var(--type-meta);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            opacity: 0.85;
+        }
+
+        .stat-box .number {
+            font-size: 72px;
+            font-weight: 500;
+            line-height: 1;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* === NO RESULTS === */
         .no-results {
+            padding: 120px 40px;
             text-align: center;
-            padding: 96px 32px;
-            color: var(--color-gray-600);
         }
 
         .no-results h2 {
-            font-size: 1.5rem;
-            color: var(--color-black);
-            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 20px;
         }
 
-        .no-results-icon {
-            font-size: 3rem;
-            margin-bottom: 24px;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 32px 16px;
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            :root {
+                --type-display: 100px;
+                --type-section: 40px;
             }
 
-            header {
-                margin-bottom: 48px;
-                padding-bottom: 24px;
+            .cold-open {
+                padding: 0 32px 40px 32px;
+                height: 45vh;
             }
 
-            h1 {
-                font-size: 1.75rem;
+            .header-nav {
+                padding: 24px 32px;
             }
 
-            .controls {
+            .index-list {
+                padding: 60px 32px;
+            }
+
+            .car-item {
                 flex-direction: column;
-                gap: 16px;
-                margin-bottom: 32px;
+                gap: 20px;
+                padding: 32px 0;
             }
 
-            .search-box {
-                min-width: 100%;
-            }
-
-            .sort-buttons {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-
-            .sort-btn {
-                flex: 1;
-                min-width: 80px;
-            }
-
-            .cars-grid {
+            .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
-                margin-bottom: 48px;
+                gap: 40px;
             }
 
-            .car-card {
-                padding: 24px;
+            .search-section {
+                padding: 60px 32px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            :root {
+                --type-display: 60px;
+                --type-section: 28px;
+            }
+
+            .cold-open {
+                padding: 0 20px 30px 20px;
+                height: 40vh;
+            }
+
+            .header-nav {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .index-list {
+                padding: 40px 20px;
+            }
+
+            .car-specs {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+
+            .stats-block {
+                margin: 60px 20px;
+                padding: 40px;
+            }
+
+            .footer {
+                padding: 60px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>0–60 Times</h1>
-            <p class="subtitle">Acceleration performance for popular cars</p>
-        </header>
+    <header class="header-nav">
+        <div class="header-left">0–60 Archive</div>
+        <div class="header-right">
+            <span id="current-time">00:00:00</span>
+        </div>
+    </header>
 
-        <div class="controls">
-            <div class="control-group" style="flex: 1; min-width: 240px;">
-                <label class="control-label">Search</label>
-                <input
-                    type="text"
-                    class="search-box"
-                    id="searchInput"
-                    placeholder="Car name or brand…"
-                >
+    <main>
+        <!-- COLD OPEN -->
+        <section class="cold-open">
+            <div>
+                <div class="hero-marquee">0–60</div>
+                <div class="hero-subtitle">acceleration times / a living archive</div>
             </div>
-            <div class="control-group">
-                <label class="control-label">Sort by</label>
-                <div class="sort-buttons">
-                    <button class="sort-btn active" data-sort="name">Name</button>
-                    <button class="sort-btn" data-sort="time-asc">Fastest</button>
-                    <button class="sort-btn" data-sort="time-desc">Slowest</button>
+        </section>
+
+        <!-- INDEX -->
+        <section class="index-list">
+            <h2 class="index-title">Selected Performance</h2>
+            <ul class="car-index" id="car-list"></ul>
+        </section>
+
+        <!-- SEARCH / FILTER -->
+        <section class="search-section">
+            <label class="search-label">Filter by name or category</label>
+            <input
+                type="text"
+                class="search-input"
+                id="search-filter"
+                placeholder="porsche, hypercar, tesla…"
+            >
+        </section>
+
+        <!-- STATS -->
+        <section class="stats-block">
+            <div class="stat-row">
+                <div class="stat-box">
+                    <h4>Total cars</h4>
+                    <div class="number" id="stat-total">43</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Fastest</h4>
+                    <div class="number" id="stat-fastest">1.85s</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Slowest</h4>
+                    <div class="number" id="stat-slowest">6.9s</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="cars-grid" id="carsGrid"></div>
-        <div class="no-results" id="noResults" style="display: none;">
-            <div class="no-results-icon">🏎️</div>
-            <h2>No cars found</h2>
-            <p>Try adjusting your search or filter criteria</p>
-        </div>
-    </div>
+        <!-- NO RESULTS -->
+        <section id="no-results" class="no-results" style="display: none;">
+            <h2>No matches</h2>
+            <p style="color: var(--text-soft); margin-top: 16px;">Try different search terms</p>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    This archive documents 0–60 acceleration times for contemporary production vehicles across multiple categories. Data sourced from manufacturer specifications and independent testing.
+                </div>
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h3>Categories</h3>
+                        <p id="categories">Loading…</p>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Years</h3>
+                        <p id="years">Loading…</p>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact</h3>
+                        <p>info@0-60.archive</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
 
     <script>
         const cars = [
@@ -347,80 +516,86 @@
             { name: 'Lexus RC F', category: 'Sports Car', time: 4.2, year: 2024 }
         ];
 
-        let currentSort = 'name';
         let filteredCars = [...cars];
 
-        function renderCars() {
-            const grid = document.getElementById('carsGrid');
-            const noResults = document.getElementById('noResults');
+        // Live clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Render indexed list
+        function renderList() {
+            const carList = document.getElementById('car-list');
+            const noResults = document.getElementById('no-results');
 
             if (filteredCars.length === 0) {
-                grid.innerHTML = '';
+                carList.innerHTML = '';
                 noResults.style.display = 'block';
                 return;
             }
 
             noResults.style.display = 'none';
-            grid.innerHTML = filteredCars.map(car => `
-                <div class="car-card">
-                    <div class="car-header">
-                        <div class="car-name">${car.name}</div>
-                        <div class="car-category">${car.category}</div>
-                    </div>
-                    <div class="car-stats">
-                        <div class="stat">
-                            <div class="stat-value">${car.time}s</div>
-                            <div class="stat-label">0-60 mph</div>
+            carList.innerHTML = filteredCars
+                .sort((a, b) => a.time - b.time)
+                .map((car, i) => `
+                    <li class="car-item">
+                        <div class="car-number">${String(i + 1).padStart(2, '0')}</div>
+                        <div class="car-content">
+                            <div class="car-title">${car.name}</div>
+                            <div class="car-meta">${car.category} / ${car.year}</div>
+                            <div class="car-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">0–60 mph</span>
+                                    <span class="spec-value">${car.time}s</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <div class="stat-value">${car.year}</div>
-                            <div class="stat-label">Model Year</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                    </li>
+                `).join('');
         }
 
-        function sortCars() {
-            filteredCars.sort((a, b) => {
-                switch (currentSort) {
-                    case 'time-asc':
-                        return a.time - b.time;
-                    case 'time-desc':
-                        return b.time - a.time;
-                    case 'name':
-                    default:
-                        return a.name.localeCompare(b.name);
-                }
-            });
-            renderCars();
+        // Update stats
+        function updateStats() {
+            document.getElementById('stat-total').textContent = filteredCars.length;
+            const fastest = Math.min(...filteredCars.map(c => c.time));
+            const slowest = Math.max(...filteredCars.map(c => c.time));
+            document.getElementById('stat-fastest').textContent = fastest + 's';
+            document.getElementById('stat-slowest').textContent = slowest + 's';
         }
 
-        function filterCars(query) {
-            const lowerQuery = query.toLowerCase();
-            filteredCars = cars.filter(car =>
-                car.name.toLowerCase().includes(lowerQuery) ||
-                car.category.toLowerCase().includes(lowerQuery)
-            );
-            sortCars();
+        // Update footer metadata
+        function updateFooter() {
+            const categories = [...new Set(cars.map(c => c.category))].sort().join(', ');
+            const years = [...new Set(cars.map(c => c.year))].sort((a, b) => b - a).join(', ');
+            document.getElementById('categories').textContent = categories;
+            document.getElementById('years').textContent = years;
         }
 
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            filterCars(e.target.value);
-        });
-
-        document.querySelectorAll('.sort-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentSort = e.target.dataset.sort;
-                sortCars();
-            });
+        // Search / filter
+        document.getElementById('search-filter').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            if (!query) {
+                filteredCars = [...cars];
+            } else {
+                filteredCars = cars.filter(car =>
+                    car.name.toLowerCase().includes(query) ||
+                    car.category.toLowerCase().includes(query)
+                );
+            }
+            renderList();
+            updateStats();
         });
 
         // Initial render
-        sortCars();
+        renderList();
+        updateStats();
+        updateFooter();
     </script>
 </body>
 </html>
